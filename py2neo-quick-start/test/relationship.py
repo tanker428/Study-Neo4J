@@ -71,27 +71,27 @@ MATCH (people:Person)-[relatedTo]-(:Movie {title: "Cloud Atlas"}) RETURN people.
 
 results = my_graph.run('MATCH (people:Person)-[relatedTo]-(:Movie {title: "Cloud Atlas"}) RETURN people.name, Type(relatedTo), relatedTo')
 result = results.data()
-print(f"{result}\n")
+print(f"how related 'Cloud Atlas': {result}\n")
 
 # 分ければいける
 query_string = 'MATCH (people:Person)-[relatedTo]-(:Movie {title: "Cloud Atlas"}) RETURN people.name, Type(relatedTo), relatedTo'
 results_table = my_graph.run(query_string).to_table()
-print(results_table)
+print(f"table出力: {results_table}\n")
 
-# pythonを用いて出力をいじれる
+# pythonを用いて出力をいじれる 元
 results = my_graph.run(query_string)
 
 # pandas
 result_data_frame = results.to_data_frame()
-print(result_data_frame)
+print(f"pandas data_frame: {result_data_frame}\n")
 
 result_series = results.to_series()
-print(result_series)
+print(f"pandas series: {result_series}\n")
 
 # sympy
 result_matrix = results.to_matrix()
-print(result_matrix)
+print(f"sympy matrix: {result_matrix}\n")
 
 # numpy
 result_ndarray = results.to_ndarray()
-print(result_ndarray)
+print(f"numpy ndaaray: {result_ndarray}\n")
