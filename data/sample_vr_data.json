@@ -1,0 +1,333 @@
+[
+{
+    "node_1":
+    {
+        "label_name": "Object" ,
+        "node_information": 
+            {
+                "name": "pottery", "japanese": "陶器", "Event": "HoverEnter", "By":"RHand(Direct)",
+                "timestamp": "20230829134259", "flame": "005044"
+            }
+    },
+
+    "node_2": 
+    {
+        "label_name": "Particle" ,
+        "node_information": 
+            {
+                "name": "particle_word1", "japanese": "を", "Event": "HoverEnter", "By":"RHand(Direct)",
+                "timestamp": "20230829134259", "flame": "005044"
+            }
+    },
+
+    "node_3": 
+    {
+        "label_name": "Verb" ,
+        "node_information": 
+            {
+                "name": "have", "japanese": "持つ", "Event": "HoverEnter", "By":"RHand(Direct)",
+                "timestamp": "20230829134259", "flame": "005044"
+            }
+    }
+},
+
+{
+    "node_1":
+    {
+        "label_name": "Object" ,
+        "node_information": 
+            {
+                "name": "pottery", "japanese": "陶器", "Event": "SelectExit", "By":"RHand(Direct)",
+                "timestamp": "20230829134302", "flame": "005251"
+            }
+    },
+
+    "node_2": 
+    {
+        "label_name": "Particle" ,
+        "node_information": 
+            {
+                "name": "particle_word1", "japanese": "を", "Event": "HoverExit", "By":"RHand(Direct)",
+                "timestamp": "20230829134302", "flame": "005268"
+            }
+    },
+
+    "node_3": 
+    {
+        "label_name": "Verb" ,
+        "node_information": 
+            {
+                "name": "break", "japanese": "割る", "Event": "Collision:Pottery_Word5,By:1",
+                "timestamp": "20230829134302", "flame": "005275"
+            }
+    }
+},
+{
+    "node_1":
+    {
+        "label_name": "Object" ,
+        "node_information": 
+            {
+                "name": "persimmon", "japanese": "柿", "Event": "SelectExit", "By":"RHand(Direct)",
+                "timestamp": "20230829134625", "flame": "019910"
+            }
+    },
+
+    "node_2": 
+    {
+        "label_name": "Particle" ,
+        "node_information": 
+            {
+                "name": "particle_word1", "japanese": "を", "Event": "HoverEnter", "By":"RHand(Direct)",
+                "timestamp": "20230829134625", "flame": "019910"
+            }
+    },
+
+    "node_3": 
+    {
+        "label_name": "Object" ,
+        "node_information": 
+            {
+                "name": "canine", "japanese": "犬", "Event": "Collision:Persimmon_Word1,By:1",
+                "timestamp": "20230829134625", "flame": "019912"
+            }
+    },
+
+    "node_4": 
+    {
+        "label_name": "Particle" ,
+        "node_information": 
+            {
+                "name": "particle_word2", "japanese": "に", "Event": "HoverExit", "By": "RHand(Direct)",
+                "timestamp": "20230829134625", "flame": "019912"
+            }
+    },
+
+    "node_5": 
+    {
+        "label_name": "Verb" ,
+        "node_information": 
+            {
+                "name": "feed", "japanese": "食べさせる", 
+                "timestamp": "20230829134625"
+            }
+    }
+},
+{
+    "node_1": 
+    {
+        "label_name": "Object" ,
+        "node_information": 
+            {
+                "name": "booze", "japanese": "お酒", "Event": "TriggerEnter:PlayerEatTrigger,By:1",
+                "timestamp": "20230829134410", "flame": "010205"
+            }
+    },
+
+    "node_2": 
+    {
+        "label_name": "Particle" ,
+        "node_information": 
+            {
+                "name": "particle_word1", "japanese": "を", "Event": "TriggerExit:PlayerEatTrigger,By:1",
+                "timestamp": "20230829134410", "flame": "010206"
+            }
+    },
+
+    "node_3": 
+    {
+        "label_name": "Verb" ,
+        "node_information": 
+            {
+                "name": "drink", "japanese": "飲む", 
+                "timestamp": "20230829134410"
+            }
+    }
+},
+{
+    "node_1": 
+    {
+        "label_name": "Object" ,
+        "node_information": 
+            {
+                "name": "fungus", "japanese": "菌類", "Event": "TriggerEnter:PlayerEatTrigger,By:1",
+                "timestamp": "20230829134531", "flame": "015991"
+            }
+    },
+
+    "node_2": 
+    {
+        "label_name": "Particle" ,
+        "node_information": 
+            {
+                "name": "particle_word1", "japanese": "を", 
+                "timestamp": "20230829134531"
+            }
+    },
+
+    "node_3": 
+    {
+        "label_name": "Verb" ,
+        "node_information": 
+            {
+                "name": "eat", "japanese": "食べる", 
+                "timestamp": "20230829134531"
+            }
+    }
+},
+
+{
+    "node_1": 
+    {
+        "label_name": "Object" ,
+        "node_information": 
+            {
+                "name": "fluff", "japanese": "綿毛", "Event": "SelectExit", "By": "RHand(Direct)",
+                "timestamp": "20230829134721", "flame": "023976"
+            }
+    },
+
+    "node_2": 
+    {
+        "label_name": "Particle" ,
+        "node_information": 
+            {
+                "name": "particle_word1", "japanese": "を", "Event": "TriggerEnter:FluffArea,By:1",
+                "timestamp": "20230829134721", "flame": "023984"
+            }
+    },
+
+    "node_3": 
+    {
+        "label_name": "Object" ,
+        "node_information": 
+            {
+                "name": "area", "japanese": "場所", 
+                "timestamp": "20230829134721" 
+            }
+    },
+
+    "node_4": 
+    {
+        "label_name": "Particle" ,
+        "node_information": 
+            {
+                "name": "particle_word2", "japanese": "に", 
+                "timestamp": "20230829134721"
+            }
+    },
+
+    "node_5": 
+    {
+        "label_name": "Verb" ,
+        "node_information": 
+            {
+                "name": "put", "japanese": "置く", 
+                "timestamp": "20230829134721"
+            }
+    }
+},
+{
+    "node_1": 
+    {
+        "label_name": "Object" ,
+        "node_information": 
+            {
+                "name": "crate", "japanese": "木箱", "Event": "SelectExit", "By": "RHand(Direct)",
+                "timestamp": "20230829135014", "flame": "036407"
+            }
+    },
+    
+    "node_2": 
+    {
+        "label_name": "Particle" ,
+        "node_information": 
+            {
+                "name": "particle_word1", "japanese": "を", "Event": "TriggerEnter:Crate,By:1",
+                "timestamp": "20230829135014", "flame": "036417"
+            }
+    },
+
+    "node_3": 
+    {
+        "label_name": "Object" ,
+        "node_information": 
+            {
+                "name": "crate", "japanese": "木箱", 
+                "timestamp": "20230829135014"
+            }
+    },
+
+    "node_4": 
+    {
+        "label_name": "Particle" ,
+        "node_information": 
+            {
+                "name": "particle_word2", "japanese": "に", 
+                "timestamp": "20230829135014"
+            }
+    },
+
+    "node_5": 
+    {
+        "label_name": "Verb" ,
+        "node_information": 
+            {
+                "name": "stack", "japanese": "積む", 
+                "timestamp": "20230829135014"
+            }
+    }
+},
+
+{
+    "node_1": 
+    {
+        "label_name": "Object" ,
+        "node_information": 
+            {
+                "name": "talisman", "japanese": "お守り", "Event": "TriggerEnter:WallArea,By:1",
+                "timestamp": "20230829135210", "flame": "044715"
+            }
+    },
+
+    "node_2": 
+    {
+        "label_name": "Particle" ,
+        "node_information": 
+            {
+                "name": "particle_word1", "japanese": "を", "Event": "SelectExit", "By": "RHand(Direct)",
+                "timestamp": "20230829135210", "flame": "044937"
+            }
+    },
+
+    "node_3": 
+    {
+        "label_name": "Object" ,
+        "node_information": 
+            {
+                "name": "wall", "japanese": "壁", "Event": "TriggerExit:WallArea,By:1",
+                "timestamp": "20230829135210", "flame": "044939"
+            }
+    },
+    
+    "node_4": 
+    {
+        "label_name": "Particle" ,
+        "node_information": 
+            {
+                "name": "particle_word2", "japanese": "に", "Event": "TriggerEnter:WallArea,By:1",
+                "timestamp": "20230829135210", "flame": "045929"
+            }
+    },
+    
+    "node_5": 
+    {
+        "label_name": "Verb" ,
+        "node_information": 
+            {
+                "name": "push", "japanese": "押し付ける", "Event": "HoverExit", "By": "RHand(Direct)",
+                "timestamp": "20230829135210", "flame": "045962"
+            }
+    }
+}
+]
