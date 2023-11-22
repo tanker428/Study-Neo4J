@@ -1,0 +1,11 @@
+{"log": {"Event":"HoverEnter", "By":"RHand(Direct)", "Target":"Pottery_Word5"},
+"timestamp": "20230829134259", "flame": "005044"}
+
+{
+   "label_name": "Target" ,
+   "node_information": 
+        {
+            "name": "Pottery_Word5", "Event": "HoverEnter", "By":"RHand(Direct)",
+            "timestamp": "20230829134259", "flame": "005044"
+        }
+}
