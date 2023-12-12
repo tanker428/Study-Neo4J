@@ -13,7 +13,7 @@ neo4j_interface.delete_all_node()
 # neo4j_interface.json_to_3node_graph(json_path="data/sample_vr_data.json")
 
 json_path = "data/sample_vr_data.json"
-json_path_nishi = "data/西A_dict.json"
+json_path_nishi = "data/user-nishi-dict.json"
 json_path_example = "data/example.json"
 json_path_sample = "data/sample_西.json"
 
