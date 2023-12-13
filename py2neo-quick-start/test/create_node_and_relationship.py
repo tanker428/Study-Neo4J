@@ -1,7 +1,7 @@
 from py2neo import Node, Relationship
 from py2neo import Graph
 
-my_graph = Graph("bolt://localhost:7687", name = "try", password='vrwiki81')
+my_graph = Graph("bolt://localhost:7687", name = "example-py2neo", password='vrwiki81')
 
 # Nodes
 TheMatrix = Node("Movie", title='The Matrix', released=1999, tagline='Welcome to the Real World')

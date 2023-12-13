@@ -1,6 +1,6 @@
 from py2neo import Graph, Node, Relationship
 
-my_graph = Graph("bolt://localhost:7687", name = "try", password='vrwiki81')
+my_graph = Graph("bolt://localhost:7687", name = "example-py2neo", password='vrwiki81')
 
 AFewGoodMen = Node("Movie", title="A Few Good Men", released=1992,
                    tagline="In the heart of the nation's capital, in a courthouse of the U.S. government, one man will stop at nothing to keep his honor, and one will stop at nothing to find the truth.")

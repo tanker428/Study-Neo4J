@@ -230,17 +230,27 @@ class Neo4jInterface:
         self.graph.delete_all()
 
 
-
 """
 vr-log 
-
 20230829134259 [L] <color=grey>[flame:005044]</color>Event:HoverEnter,By:RHand(Direct),Target:Pottery_Word5]
+
+使っていない関数
+
+・直接データを入れてNode作成
+CastAway = Node("Movie", title='Cast Away', released=2000,
+                tagline='At the edge of the world, his journey begins.')
+
+・直接データを入れてRelation作成
+AaronSAFewGoodMen = Relationship(AaronS, "WROTE", AFewGoodMen)
+
+・後付けでNodeデータを入れる
+CarrieTheMatrix['roles'] = ['Trinity']
+
+・静的にNodeを生成する
+tx = my_graph.begin()
+tx.create(AFewGoodMen)
+tx.commit()          
 """
 
-# Usage
-# neo4j_interface = Neo4jInterface("bolt://localhost:7687", "try", "vrwiki81")
-# my_graph = Graph("bolt://localhost:7687", name = "try", password='vrwiki81')
 
-# Assuming you've read your JSON data into a variable called `data`
-# neo4j_interface.process_json_data(json_data)
 
