@@ -37,6 +37,18 @@ class Neo4jInterface:
         rel = Relationship(node1, relationship_type, node2, **properties)
         self.graph.create(rel)
 
+    def create_1node(self, json_data: dict) -> dict:
+        """
+        1ノード作成 relationはなし
+        """
+
+        key = next(iter(json_data))
+        data1 = json_data[key]
+        # print(key)
+        # print(data1)
+        node1 = self.create_node(data1["label_name"], **data1['node_information'])
+
+        return
 
     def create_3node(self, json_data: dict) -> dict:
         """
@@ -163,6 +175,10 @@ class Neo4jInterface:
 
             # リレーション化
             self.create_5node_4relation(node_dict)
+
+        elif node_data_size == 1:
+            # ノード化のみ
+            node_dict = self.create_1node(node_data)
             
 
 
