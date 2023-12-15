@@ -1,13 +1,13 @@
 from py2neo import Graph, Node, Relationship
 import json
-# import os
-# import sys
-# import math
-# sys.path.append(os.path.join(os.path.dirname(__file__), ".."))
-# from data import 
+import os
+import sys
+import math
+sys.path.append(os.path.join(os.path.dirname(__file__), ".."))
+from query_functions.query_functions import Search 
 
 
-class Neo4jInterface:
+class Neo4jInterface(Search):
     """
     required
         uri: dbのuri
@@ -30,7 +30,8 @@ class Neo4jInterface:
     基本関数
     """
     def __init__(self, uri, name, password):
-        self.graph = Graph(uri, name = name, password = password)
+        super().__init__(uri, name, password)
+        # self.graph = Graph(uri, name = name, password = password)
 
     def create_node(self, label, **properties):
         node = Node(label, **properties)
@@ -228,17 +229,14 @@ class Neo4jInterface:
         """
         self.graph.delete_all()
 
-    def old_node_relationship(self, node_information, destination_information):
-        node1 = node_information
-        node2 = destination_information
-        rel1 = ":friends"
-
-        self.create_relationship(node1, rel1, node2)
-
-        return
+    def old_node_relationship(self, node_name: str, destination_name: str, rel: str):
+       query = "MERGE (p:Person { name: '" + node_name + "'}) MERGE (m:Person { name: '" + destination_name + "'}) MERGE (p)-[:" + rel + "]->(m)"
+       self.graph.evaluate(query)
+       return
 
 
-"""
+"""        # super().__init__(uri, name, password)
+
 vr-log 
 20230829134259 [L] <color=grey>[flame:005044]</color>Event:HoverEnter,By:RHand(Direct),Target:Pottery_Word5]
 

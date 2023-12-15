@@ -1,6 +1,6 @@
 from py2neo import Graph, NodeMatcher
 
-from json_functions.neo4jinterface import Neo4jInterface
+# from json_functions.neo4jinterface import Neo4jInterface
 
 # NodeMatcherはどう定義するか分らない
 # 公式ページに飛べない
@@ -9,15 +9,15 @@ from json_functions.neo4jinterface import Neo4jInterface
 
 # def search_node():
 
-class SearchAndOverwrite(Neo4jInterface):
+class Search():
     """
     required
 
 
     """
     def __init__(self, uri, name, password):
-        # self.graph = Graph(uri, name = name, password = password)
-        super().__init__(uri, name, password)
+        self.graph = Graph(uri, name = name, password = password)
+        # super().__init__(uri, name, password)
 
 #============================================================================
 # Node Search
@@ -99,13 +99,13 @@ class SearchAndOverwrite(Neo4jInterface):
     CREATE (p)-[:ACTED_IN]->(m)
     , node_name, destination_node_name, rel: str
     """
+    # neo4jinterfaceで行うために継承
+    # def add_2node_relationship(self, node_name: str, destination_name) -> None:
+    #     query = "MERGE (p:Person { name: '" + node_name + "'}) MERGE (m:Person { title: 'Keanu Reeves'}) MERGE (p)-[:ACTED_IN]->(m)"
+    #     self.graph.evaluate(query)
+    #     print("Keanu")
 
-    def add_2node_relationship(self) -> None:
-        query = "MERGE (p:Person { name: 'Tom Hanks'}) MERGE (m:Person { title: 'Keanu Reeves'}) MERGE (p)-[:ACTED_IN]->(m)"
-        self.graph.evaluate(query)
-        print("Keanu")
-
-        return
+    #     return
     #==============================================================================================
     # recommend 
 
