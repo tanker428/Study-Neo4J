@@ -29,8 +29,8 @@ class Neo4jInterface:
     """
     基本関数
     """
-    def __init__(self, uri, user, password):
-        self.graph = Graph("bolt://localhost:7687", name = user, password = password)
+    def __init__(self, uri, name, password):
+        self.graph = Graph(uri, name = name, password = password)
 
     def create_node(self, label, **properties):
         node = Node(label, **properties)

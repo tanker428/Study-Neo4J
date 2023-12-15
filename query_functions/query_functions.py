@@ -1,5 +1,7 @@
 from py2neo import Graph, NodeMatcher
 
+from json_functions.neo4jinterface import Neo4jInterface
+
 # NodeMatcherはどう定義するか分らない
 # 公式ページに飛べない
 # nodes_matcher = NodeMatcher(graph)
@@ -7,14 +9,15 @@ from py2neo import Graph, NodeMatcher
 
 # def search_node():
 
-class Search:
+class SearchAndOverwrite(Neo4jInterface):
     """
     required
 
 
     """
     def __init__(self, uri, name, password):
-        self.graph = Graph(uri, name = name, password = password)
+        # self.graph = Graph(uri, name = name, password = password)
+        super().__init__(uri, name, password)
 
 #============================================================================
 # Node Search
