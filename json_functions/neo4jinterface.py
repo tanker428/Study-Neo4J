@@ -4,10 +4,10 @@ import os
 import sys
 import math
 sys.path.append(os.path.join(os.path.dirname(__file__), ".."))
-from query_functions.query_functions import Search 
+from query_functions.query_functions import SearchAndOverwrite 
 
 
-class Neo4jInterface(Search):
+class Neo4jInterface(SearchAndOverwrite):
     """
     required
         uri: dbのuri
@@ -228,11 +228,6 @@ class Neo4jInterface(Search):
         データベースの全てのノードを削除する
         """
         self.graph.delete_all()
-
-    def old_node_relationship(self, node_name: str, destination_name: str, rel: str):
-       query = "MERGE (p:Person { name: '" + node_name + "'}) MERGE (m:Person { name: '" + destination_name + "'}) MERGE (p)-[:" + rel + "]->(m)"
-       self.graph.evaluate(query)
-       return
 
 
 """        # super().__init__(uri, name, password)

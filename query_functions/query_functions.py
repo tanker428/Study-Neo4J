@@ -9,7 +9,7 @@ from py2neo import Graph, NodeMatcher
 
 # def search_node():
 
-class Search():
+class SearchAndOverwrite():
     """
     required
 
@@ -99,13 +99,14 @@ class Search():
     CREATE (p)-[:ACTED_IN]->(m)
     , node_name, destination_node_name, rel: str
     """
-    # neo4jinterfaceで行うために継承
-    # def add_2node_relationship(self, node_name: str, destination_name) -> None:
-    #     query = "MERGE (p:Person { name: '" + node_name + "'}) MERGE (m:Person { title: 'Keanu Reeves'}) MERGE (p)-[:ACTED_IN]->(m)"
-    #     self.graph.evaluate(query)
-    #     print("Keanu")
 
-    #     return
+    def old_node_relationship(self, node_name: str, destination_name: str, rel: str):
+       """
+       既にあるnode同士に新しいrelationを加える
+       """
+       query = "MERGE (p:Person { name: '" + node_name + "'}) MERGE (m:Person { name: '" + destination_name + "'}) MERGE (p)-[:" + rel + "]->(m)"
+       self.graph.evaluate(query)
+       return
     #==============================================================================================
     # recommend 
 
