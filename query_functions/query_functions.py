@@ -72,6 +72,37 @@ class Search:
 
         return some_node_information
     
+    def search_node_label_name_with_query(self, label: str, name: str) -> None:
+      query = "Match (node:"+ label +") where node.name = \"" + name + "\" RETURN node"
+      node_information = self.graph.evaluate(query)
+      print(f"Node Information: {node_information}")
+
+      return node_information
+    #============================================================================================
+    # node overwrite
+
+    def add_node_property(self, node_information, property_dict: dict) -> None:
+        """
+        とりあえずdict 1要素のみで対応
+        """
+        property_key = next(iter(property_dict))
+        node_information[property_key] = property_dict[property_key]
+        self.graph.push(node_information)
+        return
+
+    """
+    MATCH (p:Person { name: "Your Name"})
+    MATCH (m:Movie { title: "Your Movie"})
+    CREATE (p)-[:ACTED_IN]->(m)
+    , node_name, destination_node_name, rel: str
+    """
+
+    def add_2node_relationship(self) -> None:
+        query = "MERGE (p:Person { name: 'Tom Hanks'}) MERGE (m:Person { title: 'Keanu Reeves'}) MERGE (p)-[:ACTED_IN]->(m)"
+        self.graph.evaluate(query)
+        print("Keanu")
+
+        return
     #==============================================================================================
     # recommend 
 

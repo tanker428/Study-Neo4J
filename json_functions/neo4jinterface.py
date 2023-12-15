@@ -207,7 +207,6 @@ class Neo4jInterface:
 
             # リレーション化
             self.create_user_object_relation(node_dict)
-            
 
 
     def json_to_allnode_graph(self, json_path: str) -> None:
@@ -228,6 +227,15 @@ class Neo4jInterface:
         データベースの全てのノードを削除する
         """
         self.graph.delete_all()
+
+    def old_node_relationship(self, node_information, destination_information):
+        node1 = node_information
+        node2 = destination_information
+        rel1 = ":friends"
+
+        self.create_relationship(node1, rel1, node2)
+
+        return
 
 
 """
