@@ -81,6 +81,17 @@ class SearchAndOverwrite():
       print(f"Node Information: {node_information}")
 
       return node_information
+    
+    def check_if_node_exist(self, label: str, name: str):
+        """
+        過去に同じnodeがなかったかどうかをチェックする
+        """
+        node_exist = self.search_node_name_label(label, name)
+        if node_exist == None:
+            node_exist == self.search_node_label_name_with_query(label, name)
+
+        return node_exist
+    
     #============================================================================================
     # node overwrite
 

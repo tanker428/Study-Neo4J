@@ -185,6 +185,9 @@ class Neo4jInterface(SearchAndOverwrite):
     def create_graph(self, node_data: dict) -> None:
         """
         node数に応じてどうrelationを作成するか
+
+        nodeがあるかどうかをまず検索する
+        ないなら作る あるなら上書きする方針
         """
         node_data_size = len(node_data)
         print(f"node数: {node_data_size}")
