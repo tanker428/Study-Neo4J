@@ -52,18 +52,52 @@ class Neo4jInterface(SearchAndOverwrite):
 
         key = next(iter(json_data))
         data1 = json_data[key]
-        # print(key)
-        # print(data1)
+        # print(f"key: {key}\n")
+        # print(f"data1: {data1}\n")
         user_name = data1["node_information"]["username"]
+
+        # User nodeデータもここで作成する
         data2 = {
             "label_name": "User", "node_information": {
                 "name" : user_name
             }
         }
-        node1 = self.create_node(data1["label_name"], **data1['node_information'])
-        node2 = self.create_node(data2["label_name"], **data2["node_information"])
+
+        # nodeが既に存在するかどうかをチェック
+        label1 = data1["label_name"]
+        name1 = data1["node_information"]["name"]
+        flame1 = data1["node_information"]["flame"]
+
+        label2 = data2["label_name"]
+        name2 = user_name
+
+        exist_node1 = self.check_if_node_exist_flame(label1, name1, flame1)
+        exist_node2 = self.check_if_node_exist(label2, name2)
+
+        # 過去にnodeがぞんざいしない
+        if exist_node1 == None:
+            node1 = self.create_node(data1["label_name"], **data1['node_information'])
+
+            if exist_node2 == None:
+                node2 = self.create_node(data2["label_name"], **data2["node_information"])
+                exist_node = 0 
+
+            else:
+                node2 = exist_node2
+                exist_node = 1
+        else:
+            node1 = exist_node1
+            if exist_node2 == None:
+                node2 = self.create_node(data2["label_name"], **data2["node_information"])
+                exist_node = 2
+
+            else:
+                node2 = exist_node2
+                exist_node = 3
+
+        
         # print(user_name)
-        node_dict = {"node1": node1, "node2": node2, "label1": user_name}
+        node_dict = {"node1": node1, "node2": node2, "label1": user_name, "exist_node": exist_node}
         return node_dict
 
     def create_3node(self, json_data: dict) -> dict:
@@ -163,6 +197,9 @@ class Neo4jInterface(SearchAndOverwrite):
         rel1 = node_dict["label1"]
         node2 = node_dict["node2"]
         
+        exist_node = node_dict["exist_node"]
+        print(f"exist_node: {exist_node}")
+
         self.create_relationship(node1, rel1, node2)
         return
 
@@ -182,7 +219,7 @@ class Neo4jInterface(SearchAndOverwrite):
         # リレーション化
         self.create_3node_2relation(node_dict)
 
-    def create_graph(self, node_data: dict) -> None:
+    def create_graph(self, node_data: dict, ontology_number: int) -> None:
         """
         node数に応じてどうrelationを作成するか
 
@@ -191,21 +228,24 @@ class Neo4jInterface(SearchAndOverwrite):
         """
         node_data_size = len(node_data)
         print(f"node数: {node_data_size}")
-        if node_data_size == 3:
+        if node_data_size == 3 and ontology_number == 0:
+            print("3node_2relation")
              # ノード化
             node_dict = self.create_3node(node_data)
 
             # リレーション化
             self.create_3node_2relation(node_dict)
 
-        elif node_data_size == 5:
+        elif node_data_size == 5 and ontology_number == 0:
+            print("5node_4relation")
              # ノード化
             node_dict = self.create_5node(node_data)
 
             # リレーション化
             self.create_5node_4relation(node_dict)
 
-        elif node_data_size == 1:
+        elif node_data_size == 1 and ontology_number == 1:
+            print("ontology1")
             # ノード化のみ
             node_dict = self.create_1node(node_data)
 
@@ -213,9 +253,16 @@ class Neo4jInterface(SearchAndOverwrite):
             self.create_user_object_relation(node_dict)
 
 
-    def json_to_allnode_graph(self, json_path: str) -> None:
+    def json_to_allnode_graph(self, json_path: str, ontology_number: int) -> None:
         """
         リスト内の全てのnodeをグラフ化する
+
+        ontology_number 
+            number = 0 初期のデータ 
+            3, 5でnodeとrelationを作成
+
+            number = 1 第一オントロジーデータ
+            userとobjectのみで作成
         """
         # data整理
         json_data_open = open(json_path, 'r', encoding="utf-8")
@@ -224,7 +271,7 @@ class Neo4jInterface(SearchAndOverwrite):
 
         for n in range(len(json_data)):
             relation_data = json_data[n]
-            self.create_graph(relation_data)
+            self.create_graph(relation_data, ontology_number)
 
     def delete_all_node(self) -> None:
         """

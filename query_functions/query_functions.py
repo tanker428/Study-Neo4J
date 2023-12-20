@@ -50,7 +50,19 @@ class SearchAndOverwrite():
 
         node_information = self.graph.nodes.match(label, name = name).first()
         # Person_Tom = my_graph.nodes.match("Person", name="Tom Hanks").first()
-        print(f"Node Information: {node_information}")
+        print(f"check Node Information: {node_information}")
+
+        return node_information
+    
+    def search_node_name_label_flame(self, label: str, name: str, flame: str) -> str:
+        """
+        property
+        name と labelで探索
+        """
+
+        node_information = self.graph.nodes.match(label, name = name, flame=flame).first()
+        # Person_Tom = my_graph.nodes.match("Person", name="Tom Hanks").first()
+        print(f"check_flame Node Information: {node_information}")
 
         return node_information
 
@@ -78,7 +90,14 @@ class SearchAndOverwrite():
     def search_node_label_name_with_query(self, label: str, name: str) -> None:
       query = "Match (node:"+ label +") where node.name = \"" + name + "\" RETURN node"
       node_information = self.graph.evaluate(query)
-      print(f"Node Information: {node_information}")
+      print(f"check Node Information: {node_information}")
+
+      return node_information
+    
+    def search_node_label_name_flame_with_query(self, label: str, name: str, flame: str) -> None:
+      query = "Match (node:"+ label +") where node.name = \"" + name + "\" AND node.flame = \" "+ flame +" \" RETURN node"
+      node_information = self.graph.evaluate(query)
+      print(f"check Node Information: {node_information}")
 
       return node_information
     
@@ -89,6 +108,16 @@ class SearchAndOverwrite():
         node_exist = self.search_node_name_label(label, name)
         if node_exist == None:
             node_exist == self.search_node_label_name_with_query(label, name)
+
+        return node_exist
+    
+    def check_if_node_exist_flame(self, label: str, name: str, flame: str):
+        """
+        過去に同じnodeがなかったかどうかをチェックする
+        """
+        node_exist = self.search_node_name_label_flame(label, name, flame)
+        if node_exist == None:
+            node_exist == self.search_node_label_name_flame_with_query(label, name, flame)
 
         return node_exist
     
