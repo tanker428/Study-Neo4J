@@ -39,6 +39,9 @@ class Neo4jInterface(SearchAndOverwrite):
         return node
 
     def create_relationship(self, node1, relationship_type, node2, **properties):
+        """
+        node1 -> node2 
+        """
         rel = Relationship(node1, relationship_type, node2, **properties)
         self.graph.create(rel)
 
@@ -98,6 +101,149 @@ class Neo4jInterface(SearchAndOverwrite):
         
         # print(user_name)
         node_dict = {"node1": node1, "node2": node2, "label1": user_name, "exist_node": exist_node}
+        return node_dict
+    
+    def create_node_ontology_ver2(self, json_data: dict) -> dict:
+        """
+        ontology ver2の構造を作成する
+
+        一回のlogで
+        User   : timestamp
+            state
+        State  : flame by
+            action 
+        Action : actionname event 
+            mainObject
+        Object : name
+            bbox
+        Bbox   : timestamp flame
+        """
+
+        json_key = next(iter(json_data))
+        data_sum = json_data[json_key]
+        data_sum_inf = data_sum["node_information"]
+        # print(f"key: {key}\n")
+        # print(f"data1: {data1}\n")
+
+        user_name = data_sum_inf["username"]
+        flame = data_sum_inf["flame"]
+        by = data_sum_inf["by"]
+        event = data_sum_inf["event"]
+        name = data_sum_inf["name"]
+        timestamp = data_sum_inf["timestamp"]
+
+        # action_name
+        if event == "HoverEnter":
+            action_name = "触れる"
+        elif event == "HoverExit":
+            action_name = "離れる"
+        elif event == "SelectEnter":
+            action_name = "つかむ"
+        elif event == "SelectExit" :
+            action_name = "離す"
+        else:
+            action_name = "不明"
+
+        ## node データの成型
+        # User 
+
+        data_user = {
+            "label_name": "User", "node_information": {
+                "username" : user_name
+            }
+        }
+
+        # State
+
+        data_state = {
+            "label_name" : "State", "node_information": {
+                "flame" : flame, "by" : by
+            }
+        }
+
+        # Action
+
+        data_action = {
+            "label_name" : "Action", "node_information": {
+                "event" : event, "actionname" : action_name
+            }
+        }
+
+        # Object
+
+        data_object = {
+            "label_name" : "Object", "node_information": {
+                "objectname" : name
+            }
+        }
+
+        # Bbox
+        data_bbox = {
+            "label_name" : "Bbox", "node_information": {
+                "timestamp" : timestamp, "flame" : flame
+            }
+        }
+        
+        ## Relation
+        # user -> state
+        label_userstate = ":state"
+
+        # state -> action
+        label_stateaction = ":stateaction"
+
+        # action -> object
+        label_actionobject = ":mainObject"
+
+        # object -> bbox
+        label_objectbbox = ":bbox"
+
+        # nodeを常に新しく生成
+        node_state = self.create_node(data_state["label_name"], **data_state["node_information"])
+        node_action = self.create_node(data_action["label_name"], **data_action["node_information"])
+        node_bbox = self.create_node(data_bbox["label_name"], **data_bbox["node_information"])
+
+
+        # nodeが既に存在するかどうかをチェック
+        # label1 = data1["label_name"]
+        # name1 = data1["node_information"]["name"]
+        # flame1 = data1["node_information"]["flame"]
+
+        # label2 = data2["label_name"]
+        # name2 = user_name
+
+        # exist_node1 = self.check_if_node_exist_flame(label1, name1, flame1)
+        # exist_node2 = self.check_if_node_exist(label2, name2)
+        exist_object = None
+        exist_user = None
+
+        # 過去にnodeがぞんざいしない
+        if exist_user == None:
+            node_user = self.create_node(data_user["label_name"], **data_user['node_information'])
+
+            if exist_object == None:
+                node_object = self.create_node(data_object["label_name"], **data_object["node_information"])
+                exist_node = "new user & new object"
+
+            else:
+                node2 = exist_object
+                exist_node = "new user & exist object"
+        else:
+            node_user = exist_user
+            if exist_object == None:
+                node_object = self.create_node(data_object["label_name"], **data_object["node_information"])
+                exist_node = "exist user & new object"
+
+            else:
+                node_object = exist_object
+                exist_node = "exist user & exist object"
+
+        
+        print(f"about node: {exist_node}")
+        node_dict = {"node_user": node_user, "node_state": node_state, "node_action": node_action,
+                     "node_object": node_object, "node_bbox": node_bbox, 
+                     "label_userstate": label_userstate, "label_stateaction": label_stateaction, 
+                     "label_actionobject": label_actionobject, "label_objectbbox": label_objectbbox
+                     }
         return node_dict
 
     def create_3node(self, json_data: dict) -> dict:
@@ -202,6 +348,17 @@ class Neo4jInterface(SearchAndOverwrite):
 
         self.create_relationship(node1, rel1, node2)
         return
+    
+    def create_relation_ontology_ver2(self, node_dict: dict) -> None:
+        
+        # User -> State
+        node1 = node_dict["node_user"]
+        rel1 = node_dict["label_userstate"]
+        node2 = node_dict["node_state"]
+
+        self.create_relationship(node1, rel1, node2)
+        
+        return
 
     def json_to_3node_graph(self, json_path: str) -> None:
         """
@@ -251,6 +408,14 @@ class Neo4jInterface(SearchAndOverwrite):
 
             # リレーション化
             self.create_user_object_relation(node_dict)
+
+        elif node_data_size == 1 and ontology_number == 2:
+            print("ontology2")
+            # ノード化のみ
+            node_dict = self.create_node_ontology_ver2(node_data)
+
+            # リレーション化
+            self.create_relation_ontology_ver2(node_dict)
 
 
     def json_to_allnode_graph(self, json_path: str, ontology_number: int) -> None:
