@@ -25,13 +25,17 @@ class Neo4jInterface(SearchAndOverwrite):
         }
 
     """
-
     """
     基本関数
     """
     def __init__(self, uri, name, password):
         super().__init__(uri, name, password)
+        # self.before_flame = None
         # self.graph = Graph(uri, name = name, password = password)
+
+    def set_before_flame(self):
+        self.before_flame = "-1"
+        self.before_timestamp = "-1"
 
     def create_node(self, label, **properties):
         node = Node(label, **properties)
@@ -118,6 +122,7 @@ class Neo4jInterface(SearchAndOverwrite):
             bbox
         Bbox   : timestamp flame
         """
+        
 
         json_key = next(iter(json_data))
         data_sum = json_data[json_key]
@@ -204,17 +209,27 @@ class Neo4jInterface(SearchAndOverwrite):
 
 
         # nodeが既に存在するかどうかをチェック
-        # label1 = data1["label_name"]
-        # name1 = data1["node_information"]["name"]
-        # flame1 = data1["node_information"]["flame"]
-
         label_user = data_user["label_name"]
         label_object = data_object["label_name"]
-
+        label_bbox = data_bbox["label_name"]
 
         exist_object = self.check_if_object_exist(label_object, name)
-        # なぜかnode_existでいける
         exist_user = self.check_if_user_exist(label_user, user_name)
+
+       
+        
+        # if self.before_flame == None:
+        #     exist_bbox = None
+        #     self.before_flame = flame
+
+        #     print(f"before flame: {self.before_flame}")
+        #     print(f"flame: {flame}")
+        # else:
+        exist_bbox = self.check_if_node_exist_flame_timestamp(label_bbox, self.before_flame, self.before_timestamp)
+            
+        print(f"before flame: {self.before_flame}")
+        print(f"flame: {flame}")
+        
         # exist_object = None
         # exist_user = None
 
@@ -227,7 +242,7 @@ class Neo4jInterface(SearchAndOverwrite):
                 exist_node = "new user & new object"
 
             else:
-                node2 = exist_object
+                node_object = exist_object
                 exist_node = "new user & exist object"
         else:
             node_user = exist_user
@@ -238,13 +253,20 @@ class Neo4jInterface(SearchAndOverwrite):
             else:
                 node_object = exist_object
                 exist_node = "exist user & exist object"
-
+        
+        if exist_bbox == None:
+            node_before_bbox = None
+            print("bbox none") 
+        else:
+            node_before_bbox = exist_bbox
+        self.before_flame = flame
+        self.before_timestamp = timestamp
         
         print(f"about node: {exist_node}")
         node_dict = {"node_user": node_user, "node_state": node_state, "node_action": node_action,
-                     "node_object": node_object, "node_bbox": node_bbox, 
+                     "node_object": node_object, "node_bbox": node_bbox, "node_before_bbox": node_before_bbox,
                      "label_userstate": label_userstate, "label_stateaction": label_stateaction, 
-                     "label_actionobject": label_actionobject, "label_objectbbox": label_objectbbox
+                     "label_actionobject": label_actionobject, "label_objectbbox": label_objectbbox,
                      }
         return node_dict
 
@@ -379,7 +401,15 @@ class Neo4jInterface(SearchAndOverwrite):
         self.create_relationship(node1, rel1, node2)
 
         # before BBox -> after BBox
-        
+        node1 = node_dict["node_before_bbox"]
+        if node1 == None:
+            pass
+
+        else:
+            rel1 = ":next"
+            node2 = node_dict["node_bbox"]
+            self.create_relationship(node1, rel1, node2)
+
         return
 
     def json_to_3node_graph(self, json_path: str) -> None:

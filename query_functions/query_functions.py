@@ -65,6 +65,13 @@ class SearchAndOverwrite():
         print(f"check_flame Node Information: {node_information}")
 
         return node_information
+    
+    def search_node_flame_timestamp(self, label: str, flame: str, timestamp: str):
+        node_information = self.graph.nodes.match(label, flame = flame, timestamp=timestamp).first()
+        # Person_Tom = my_graph.nodes.match("Person", name="Tom Hanks").first()
+        print(f"check_flame Node Information: {node_information}")        
+
+        return node_information
 
     def search_node_username_label(self, label: str, username: str) -> str:
         """
@@ -138,6 +145,13 @@ class SearchAndOverwrite():
 
       return node_information
     
+    def search_node_label_flame_timestamp_with_query(self, label: str, flame: str, timestamp: str) -> None:
+      query = "Match (node:"+ label +") where node.flame = \"" + flame + "\" AND node.timestamp = \" "+ timestamp +" \" RETURN node"
+      node_information = self.graph.evaluate(query)
+      print(f"check flame timestamp Node Information: {node_information}")
+
+      return node_information
+    
     #==============================================================================================
     
     def check_if_node_exist(self, label: str, name: str):
@@ -177,6 +191,16 @@ class SearchAndOverwrite():
         node_exist = self.search_node_name_label_flame(label, name, flame)
         if node_exist == None:
             node_exist == self.search_node_label_name_flame_with_query(label, name, flame)
+
+        return node_exist
+    
+    def check_if_node_exist_flame_timestamp(self, label: str, flame: str, timestamp: str):
+        """
+        過去に同じnodeがなかったかどうかをチェックする
+        """
+        node_exist = self.search_node_flame_timestamp(label, flame, timestamp)
+        if node_exist == None:
+            node_exist == self.search_node_label_flame_timestamp_with_query(label, flame, timestamp)
 
         return node_exist
     
