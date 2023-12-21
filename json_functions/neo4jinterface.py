@@ -208,13 +208,15 @@ class Neo4jInterface(SearchAndOverwrite):
         # name1 = data1["node_information"]["name"]
         # flame1 = data1["node_information"]["flame"]
 
-        # label2 = data2["label_name"]
-        # name2 = user_name
+        label_user = data_user["label_name"]
+        label_object = data_object["label_name"]
 
-        # exist_node1 = self.check_if_node_exist_flame(label1, name1, flame1)
-        # exist_node2 = self.check_if_node_exist(label2, name2)
-        exist_object = None
-        exist_user = None
+
+        exist_object = self.check_if_object_exist(label_object, name)
+        # なぜかnode_existでいける
+        exist_user = self.check_if_user_exist(label_user, user_name)
+        # exist_object = None
+        # exist_user = None
 
         # 過去にnodeがぞんざいしない
         if exist_user == None:
@@ -355,8 +357,28 @@ class Neo4jInterface(SearchAndOverwrite):
         node1 = node_dict["node_user"]
         rel1 = node_dict["label_userstate"]
         node2 = node_dict["node_state"]
-
         self.create_relationship(node1, rel1, node2)
+
+
+        # State -> Action
+        node1 = node_dict["node_state"]
+        rel1 = node_dict["label_stateaction"]
+        node2 = node_dict["node_action"]
+        self.create_relationship(node1, rel1, node2)
+
+        # Action -> Object
+        node1 = node_dict["node_action"]
+        rel1 = node_dict["label_actionobject"]
+        node2 = node_dict["node_object"]
+        self.create_relationship(node1, rel1, node2)
+
+        # Object -> Bbox
+        node1 = node_dict["node_object"]
+        rel1 = node_dict["label_objectbbox"]
+        node2 = node_dict["node_bbox"]
+        self.create_relationship(node1, rel1, node2)
+
+        # before BBox -> after BBox
         
         return
 

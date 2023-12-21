@@ -66,6 +66,29 @@ class SearchAndOverwrite():
 
         return node_information
 
+    def search_node_username_label(self, label: str, username: str) -> str:
+        """
+        property
+        usernameでUser探索
+        """
+
+        node_information = self.graph.nodes.match(label, username = username).first()
+        # Person_Tom = my_graph.nodes.match("Person", name="Tom Hanks").first()
+        print(f"check User Information: {node_information}")
+
+        return node_information
+    
+    def search_node_objectname_label(self, label: str, objectname: str) -> str:
+        """
+        property
+        objectnameでUser探索
+        """
+
+        node_information = self.graph.nodes.match(label, objectname = objectname).first()
+        # Person_Tom = my_graph.nodes.match("Person", name="Tom Hanks").first()
+        print(f"check Object Information: {node_information}")
+        return node_information
+    
     """
     これはすべて同じ値
     # keanu = my_graph.nodes.match("Person", name="Keanu Reeves").first()
@@ -94,12 +117,28 @@ class SearchAndOverwrite():
 
       return node_information
     
+    def search_node_label_username_with_query(self, label: str, name: str) -> None:
+      query = "Match (node:"+ label +") where node.username = \"" + name + "\" RETURN node"
+      node_information = self.graph.evaluate(query)
+      print(f"check User Information: {node_information}")
+
+      return node_information
+    
+    def search_node_label_object_with_query(self, label: str, name: str) -> None:
+      query = "Match (node:"+ label +") where node.objectname = \"" + name + "\" RETURN node"
+      node_information = self.graph.evaluate(query)
+      print(f"check Object Information: {node_information}")
+
+      return node_information
+    
     def search_node_label_name_flame_with_query(self, label: str, name: str, flame: str) -> None:
       query = "Match (node:"+ label +") where node.name = \"" + name + "\" AND node.flame = \" "+ flame +" \" RETURN node"
       node_information = self.graph.evaluate(query)
       print(f"check Node Information: {node_information}")
 
       return node_information
+    
+    #==============================================================================================
     
     def check_if_node_exist(self, label: str, name: str):
         """
@@ -108,6 +147,26 @@ class SearchAndOverwrite():
         node_exist = self.search_node_name_label(label, name)
         if node_exist == None:
             node_exist == self.search_node_label_name_with_query(label, name)
+
+        return node_exist
+    
+    def check_if_user_exist(self, label: str, username: str):
+        """
+        過去に同じnodeがなかったかどうかをチェックする
+        """
+        node_exist = self.search_node_username_label(label, username)
+        if node_exist == None:
+            node_exist == self.search_node_label_username_with_query(label, username)
+
+        return node_exist
+    
+    def check_if_object_exist(self, label: str, objectname: str):
+        """
+        過去に同じnodeがなかったかどうかをチェックする
+        """
+        node_exist = self.search_node_objectname_label(label, objectname)
+        if node_exist == None:
+            node_exist == self.search_node_label_object_with_query(label, objectname)
 
         return node_exist
     
