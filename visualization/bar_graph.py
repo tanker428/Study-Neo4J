@@ -7,8 +7,32 @@ import matplotlib.pyplot as plt
 pythonの実行 > ターミナルでpythonを実行を選択
 """
 
- 
-left = np.array([1, 2, 3, 4, 5])
-height = np.array([100, 200, 300, 400, 500])
-plt.bar(left, height)
-plt.show()
+
+# 例
+# score_dict = {"Pottery": 32, "Crate": 2, "Dog": 109}
+# score_sorted_dict = sorted(score_dict.items(), key=lambda x:x[1], reverse=True)
+
+# print(score_sorted_dict)
+
+def bar_graph(dict):
+    """
+    例 このようなdictから棒グラフ作成
+    score_dict = {"Pottery": 32, "Crate": 2, "Dog": 109}
+    """
+    sorted_dict = sorted(dict.items(), key=lambda x:x[1], reverse=True)
+    labels = []
+    scores = []
+
+    for k,v in sorted_dict:
+        labels.append(k)
+        scores.append(v)
+
+    # print(labels, scores)
+
+    height = np.array(scores)
+    plt.bar(labels, height)
+    plt.show()    
+    
+    return
+
+# bar_graph({"Pottery": 32, "Crate": 2, "Dog": 109})
