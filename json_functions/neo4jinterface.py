@@ -197,7 +197,7 @@ class Neo4jInterface(SearchAndOverwrite):
         label_stateaction = ":stateaction"
 
         # action -> object
-        label_actionobject = ":mainObject"
+        label_actionobject = "mainObject"
 
         # object -> bbox
         label_objectbbox = ":bbox"

@@ -6,5 +6,6 @@ from query_functions.query_functions import SearchAndOverwrite
 
 graph_search = SearchAndOverwrite("bolt://localhost:7687", name = "try", password='vrwiki81')
 
+# この関数いらないかも
 add_rel = graph_search.search_node_name_label("User", "nishi")
 # print(node_exist)

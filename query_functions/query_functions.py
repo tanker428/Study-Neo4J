@@ -153,6 +153,43 @@ class SearchAndOverwrite():
       return node_information
     
     #==============================================================================================
+
+    def search_relationship(self, node, r_type: str) -> None:
+        """
+        nodeが変数として入力された場合にそのnodeの指定したrelationを全て取り出す
+        できないのでquery直接ぶち込みをやる
+        """
+        label = "Object"
+        Pot = self.graph.nodes.match(label, name="Pottery_Word5").first()
+        node_relation = self.graph.relationships.match(nodes=[Pot], r_type="mainObject").all()
+        node_relation_number = len(node_relation)
+        print(f"relation imformation: {node_relation}")
+
+        # query = 'Match (obj:Object)-[r:mainObject]-(act:Action) where obj.objectname="Pottery_Word5" return act'
+        query = 'Match (obj:Object)-[r:mainObject]-(act:Action) where obj.objectname="Pottery_Word5" return count(act) as action_count'
+        node_information = self.graph.evaluate(query)
+        
+        print(f"relation number: {node_information}")
+
+        # query = "Match (node:"+ label +") where node.name = \"" + name + "\" AND node.flame = \" "+ flame +" \" RETURN node"
+        # node_information = self.graph.evaluate(query)
+        return
+    
+    # Tom = my_graph.nodes.match(name="Tom Hanks").first()
+    # Toms = my_graph.match(nodes=[Tom], r_type="ACTED_IN").all()
+    # print(f"Tom Hanks acted in movies: {Toms}\n")
+
+    def example(self):
+        Tom = self.graph.nodes.match(name="Tom Hanks").first()
+        Toms = self.graph.relationships.match(nodes=[Tom], r_type="ACTED_IN").all()
+        tom_number = len(Toms)
+        print(f"Tom Hanks acted in movies: {Toms}\n")
+        print(f"tom number: {tom_number}")
+        query = 'MATCH (p:Person {name: "Tom Hanks"})-[:ACTED_IN]->(m:Movie) RETURN m'
+        node_information = self.graph.evaluate(query)
+        print(node_information)
+        return
+    #==============================================================================================
     
     def check_if_node_exist(self, label: str, name: str):
         """
