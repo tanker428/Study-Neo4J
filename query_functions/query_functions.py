@@ -175,6 +175,18 @@ class SearchAndOverwrite():
         # node_information = self.graph.evaluate(query)
         return
     
+    def search_relationship_node_number(self, label: str, objectname: str, r_type: str, target_label: str) -> None:
+        """
+        あるノード(label, objectname)と特定のr_typeでつながるノード(label指定）の個数を返す
+        なぜか''で囲まないとエラー出た というか数値が0になる
+        """
+        query = 'Match (obj:' + label + ")-[r:" + r_type + "]-(act:" + target_label + ") where obj.objectname= \"" + objectname +  '\" return count(act) as action_count'
+        print(query)
+        # query = 'Match (obj:Object)-[r:mainObject]-(act:Action) where obj.objectname="Pottery_Word5" return count(act) as action_count'
+        nodes_number = self.graph.evaluate(query)
+        print(f"{target_label}_nodes_number: {nodes_number}")
+        return nodes_number
+    
     # Tom = my_graph.nodes.match(name="Tom Hanks").first()
     # Toms = my_graph.match(nodes=[Tom], r_type="ACTED_IN").all()
     # print(f"Tom Hanks acted in movies: {Toms}\n")
@@ -189,6 +201,58 @@ class SearchAndOverwrite():
         node_information = self.graph.evaluate(query)
         print(node_information)
         return
+    
+    def search_relationship_node_flame(self, label: str, objectname: str, r_type1: str, r_type2: str, target_label: str) -> None:
+        """
+        あるノード(label, objectname)と特定のr_typeでつながるノード(label指定）の個数を返す
+        なぜか''で囲まないとエラー出た というか数値が0になる
+        """
+        query = 'Match (obj:' + label + ")-[r:" + r_type1 + "]-(bbox1:" + target_label + ")-[r2:" + r_type2 +"]-(bbox2: " + target_label + ") where obj.objectname= \"" + objectname +  '\" return bbox1.flame, bbox2.flame'
+        print(query)
+        nodes_information = self.graph.evaluate(query)
+        print(f"{target_label}_nodes: {nodes_information}")
+
+        """
+        MATCH (obj:Object)-[r:bbox]->(bbox1:Bbox)-[r2:next]->(bbox2:Bbox)
+        WHERE obj.name = 'A'
+        RETURN bbox1.flame, bbox2.flame
+        """
+        
+
+        return nodes_information
+    
+
+    #==============================================================================================
+    def search_all_relationship_node_number(self, label: str, objectlist: list, r_type: str, target_label: str) -> None:
+        object_number  = len(objectlist)
+        object_number_dict = {}
+        
+        for i in range(object_number):
+            object_name = objectlist[i]
+            object_number = self.search_relationship_node_number(label, object_name, r_type, target_label)
+            object_number_dict[object_name] = object_number
+
+        print(f"object number dict: {object_number_dict}")
+
+        return object_number_dict
+
+    def search_relationship_all_node_flame(self, label: str, objectlist: list, r_type1: str, r_type2: str, target_label: str):
+        """
+        失敗作
+        objectlistのobject一つにつきrandomなbboxの一つのflameが取り出されるだけ
+        """
+        objerctlist_size = len(objectlist)
+        flame_list = []
+        for i in range(objerctlist_size):
+            objectname = objectlist[i]
+            flame = self.search_relationship_node_flame(label, objectname, r_type1, r_type2, target_label)
+            flame_list.append(flame)
+
+        print(flame_list)
+        return flame_list
+
+
+
     #==============================================================================================
     
     def check_if_node_exist(self, label: str, name: str):
@@ -285,7 +349,7 @@ class SearchAndOverwrite():
 
 
 # recommendに入る
-"""
+"""query = "Match (node:"+ label +") where node.flame = \"" + flame + "\" AND node.timestamp = \" "+ timestamp +" \" RETURN node"
 Extend Tom Hanks co-actors, to find co-co-actors who haven't worked with Tom Hanks...
 
 cypher
