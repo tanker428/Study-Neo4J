@@ -16,7 +16,7 @@ nishiB = "nishiBver2"
 tanakaA = "tanakaAver2"
 tanakaB = "tanakaBver2"
 PASSWORD = 'vrwiki81'
-graph = Neo4jInterface("bolt://localhost:7687", name = nishiB, password=PASSWORD)
+graph = Neo4jInterface("bolt://localhost:7687", name = tanakaA, password=PASSWORD)
 
 """
 ここでやること
@@ -41,8 +41,10 @@ target_label = "Bbox"
 
 # python driverを使うやつでいく
 # flame_list = flame_difference(label, object_list[0], r_type, r_type2, target_label)
-flame_all_dic, flame_dic = all_flame_difference_mean(label, object_listB, r_type, r_type2, target_label)
+flame_all_dic, flame_dic = all_flame_difference_mean(label, object_listA, r_type, r_type2, target_label, tanakaA)
 
-
-# bar_graph(flame_dic, "primitive_action_name", "primitive_action_average_flame")
+# flame_dic_nishiB = {'Carving': 186.83333333333334, 'Granite': 190.04166666666666, 'Decor': 0, 'Garland': 279.94736842105266, 'Ewe': 171.09803921568627, 'Dandelion': 464.3333333333333, 'Chick': 187.0, 'Vintage': 321.75, 'Acorn': 50.705882352941174, 'Charcoal': 429.0} 
+# flame_dic_tanakaB = {'Carving': 143.4, 'Granite': 314.22222222222223, 'Decor': 154.2, 'Garland': 51.8421052631579, 'Ewe': 91.0, 'Dandelion': 226.33333333333334, 'Chick': 148.61818181818182, 'Vintage': 308.0, 'Acorn': 56.8433734939759, 'Charcoal': 188.32}
+flame_dic ={'Slate': 132.90384615384616, 'Booze': 208.74074074074073, 'Persimmon': 183.3448275862069, 'Talisman': 243.2, 'Canine': 173.58620689655172, 'Snail': 107.74285714285715, 'Crate': 136.0, 'Pottery': 114.19298245614036, 'Fluff': 302.11764705882354, 'Fungus': 907.4}
+bar_graph(flame_dic, "primitive_action_name", "primitive_action_average_flame")
 
