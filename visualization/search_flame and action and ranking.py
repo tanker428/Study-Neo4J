@@ -11,8 +11,12 @@ from neo4j import GraphDatabase
 # Neo4jInterfaceはsearchのクラスを引き継いでいる
 example = "example-py2neo"
 normal = "try"
+nishiA = "nishiAver2"
+nishiB = "nishiBver2"
+tanakaA = "tanakaAver2"
+tanakaB = "tanakaBver2"
 PASSWORD = 'vrwiki81'
-graph = Neo4jInterface("bolt://localhost:7687", name = normal, password=PASSWORD)
+graph = Neo4jInterface("bolt://localhost:7687", name = nishiB, password=PASSWORD)
 
 """
 ここでやること
@@ -26,7 +30,8 @@ label = "Object"
 # できればここも自動化したいがまあコピペで済む
 graph.search_node_label(label)
 
-object_list = ["Slate_Word4", "Booze_Word8", "Persimmon_Word1", "Talisman_Word10", "Canine_Word3", "Snail_Word2", "Crate_Word6", "Pottery_Word5", "Fluff_Word7",  "Fungus_Word9"]
+object_listA = ["Slate_Word4", "Booze_Word8", "Persimmon_Word1", "Talisman_Word10", "Canine_Word3", "Snail_Word2", "Crate_Word6", "Pottery_Word5", "Fluff_Word7",  "Fungus_Word9"]
+object_listB = ["Carving_Word5", "Granite_Word4", "Decor_Word10", "Garland_Word6", "Ewe_Word2", "Dandelion_Word9", "Chick_Word3", "Vintage_Word8", "Acorn_Word1", "Charcoal_Word7"]
 r_type = "bbox"
 r_type2 = "next"
 target_label = "Bbox"
@@ -36,7 +41,8 @@ target_label = "Bbox"
 
 # python driverを使うやつでいく
 # flame_list = flame_difference(label, object_list[0], r_type, r_type2, target_label)
-flame_all_dic, flame_dic = all_flame_difference_mean(label, object_list, r_type, r_type2, target_label)
+flame_all_dic, flame_dic = all_flame_difference_mean(label, object_listB, r_type, r_type2, target_label)
 
-bar_graph(flame_dic, "primitive_action_name", "primitive_action_average_flame")
+
+# bar_graph(flame_dic, "primitive_action_name", "primitive_action_average_flame")
 

@@ -8,13 +8,13 @@ from json_functions.neo4jinterface import Neo4jInterface
  create_ontology_ver2 graph
 """
 
-neo4j_interface = Neo4jInterface("bolt://localhost:7687", "try", "vrwiki81")
+neo4j_interface = Neo4jInterface("bolt://localhost:7687", "nishiBver2", "vrwiki81")
 
 # 前のグラフを消去する
 neo4j_interface.delete_all_node()
 
 # 入力
-json_ontology_ver1 = "data/user-nishi-dict.json"
+json_ontology_ver1 = "data/user-nishi-B-dict.json"
 number = 2
 
 #　準備

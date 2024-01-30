@@ -230,6 +230,7 @@ class SearchAndOverwrite():
         for i in range(object_number):
             object_name = objectlist[i]
             object_number = self.search_relationship_node_number(label, object_name, r_type, target_label)
+            
             object_number_dict[object_name] = object_number
 
         print(f"object number dict: {object_number_dict}")
