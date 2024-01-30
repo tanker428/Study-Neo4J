@@ -15,7 +15,7 @@ tanakaB = "tanakaBver2"
 graph = Neo4jInterface("bolt://localhost:7687", name = tanakaA, password='vrwiki81')
 
 """
-nodeのランキングを作る
+Objectのランキングを作る
 
 まずはラベルがObjectのノードとmainObjectというリレーションでつながるActionのノードの数を図りランキング化してグラフ化する
 
@@ -48,7 +48,8 @@ _word1とかを取り除くため
 
 # score_dict_nishiB = {'Carving': 31, 'Granite': 25, 'Decor': 0, 'Garland': 19, 'Ewe': 55, 'Dandelion': 3, 'Chick': 35, 'Vintage': 16, 'Acorn': 27, 'Charcoal': 15}
 # score_dict_tanakaB = {'Carving': 61, 'Granite': 19, 'Decor': 30, 'Garland': 39, 'Ewe': 76, 'Dandelion': 6, 'Chick': 56, 'Vintage': 10, 'Acorn': 75, 'Charcoal': 23}
-score_dict = {'Slate': 52, 'Booze': 27, 'Persimmon': 26, 'Talisman': 15, 'Canine': 32, 'Snail': 35, 'Crate': 21, 'Pottery': 56, 'Fluff': 18, 'Fungus': 5}
+# score_dict_tanakaA = {'Slate': 52, 'Booze': 27, 'Persimmon': 26, 'Talisman': 15, 'Canine': 32, 'Snail': 35, 'Crate': 21, 'Pottery': 56, 'Fluff': 18, 'Fungus': 5}
+
 # ソートしてグラフ化
 # score_sorted_dict = sorted(score_dict.items(), key=lambda x:x[1], reverse=True)
 bar_graph(score_dict, xlabel="object name", ylabel="number of actions")

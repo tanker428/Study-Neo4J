@@ -218,8 +218,11 @@ class SearchAndOverwrite():
         RETURN bbox1.flame, bbox2.flame
         """
         
-
         return nodes_information
+    
+    # def search_action_with_object():
+    #     query = 'Match (obj:' + label + ")-[r:" + r_type + "]-(act:" + target_label + ") where obj.objectname= \"" + objectname +  '\" return count(act) as action_count'
+    #     return
     
 
     #==============================================================================================
