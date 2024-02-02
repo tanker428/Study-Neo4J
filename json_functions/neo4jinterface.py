@@ -185,22 +185,23 @@ class Neo4jInterface(SearchAndOverwrite):
         # Bbox
         data_bbox = {
             "label_name" : "Bbox", "node_information": {
-                "timestamp" : timestamp, "flame" : flame
+                "timestamp" : timestamp, "flame" : flame,
+                "event" : event
             }
         }
         
         ## Relation
         # user -> state
-        label_userstate = ":state"
+        label_userstate = "state"
 
         # state -> action
-        label_stateaction = ":stateaction"
+        label_stateaction = "stateaction"
 
         # action -> object
-        label_actionobject = ":mainObject"
+        label_actionobject = "mainObject"
 
         # object -> bbox
-        label_objectbbox = ":bbox"
+        label_objectbbox = "bbox"
 
         # nodeを常に新しく生成
         node_state = self.create_node(data_state["label_name"], **data_state["node_information"])
@@ -406,7 +407,7 @@ class Neo4jInterface(SearchAndOverwrite):
             pass
 
         else:
-            rel1 = ":next"
+            rel1 = "next"
             node2 = node_dict["node_bbox"]
             self.create_relationship(node1, rel1, node2)
 
