@@ -12,7 +12,9 @@ nishiA = "nishiAver2"
 nishiB = "nishiBver2"
 tanakaA = "tanakaAver2"
 tanakaB = "tanakaBver2"
-graph = Neo4jInterface("bolt://localhost:7687", name = tanakaA, password='vrwiki81')
+
+name = nishiB
+graph = Neo4jInterface("bolt://localhost:7687", name = name, password='vrwiki81')
 
 """
 Objectのランキングを作る
@@ -39,17 +41,15 @@ relation_name = "mainObject"
 target_label = "Action"
 
 # これらの入力からすべてのobject名でactionノードの個数を計算する
-score_dict = graph.search_all_relationship_node_number(label, object_listA, relation_name, target_label)
+score_dict = graph.search_all_relationship_node_number(label, object_listB, relation_name, target_label)
 print(score_dict)
 """
 ここまでで一旦出力してscore_dictをべた張りする
 _word1とかを取り除くため
 """
 
-# score_dict_nishiB = {'Carving': 31, 'Granite': 25, 'Decor': 0, 'Garland': 19, 'Ewe': 55, 'Dandelion': 3, 'Chick': 35, 'Vintage': 16, 'Acorn': 27, 'Charcoal': 15}
-# score_dict_tanakaB = {'Carving': 61, 'Granite': 19, 'Decor': 30, 'Garland': 39, 'Ewe': 76, 'Dandelion': 6, 'Chick': 56, 'Vintage': 10, 'Acorn': 75, 'Charcoal': 23}
-# score_dict_tanakaA = {'Slate': 52, 'Booze': 27, 'Persimmon': 26, 'Talisman': 15, 'Canine': 32, 'Snail': 35, 'Crate': 21, 'Pottery': 56, 'Fluff': 18, 'Fungus': 5}
-
+# score_dict_nishiA = {'Slate': 26, 'Booze': 26, 'Persimmon': 24, 'Talisman': 16, 'Canine': 35, 'Snail': 18, 'Crate': 8, 'Pottery': 29, 'Fluff': 16, 'Fungus': 8}  
+# score_dict = {'Carving': 25, 'Granite': 25, 'Decor': 0, 'Garland': 16, 'Ewe': 52, 'Dandelion': 3, 'Chick': 32, 'Vintage': 19, 'Acorn': 24, 'Charcoal': 9} 
 # ソートしてグラフ化
 # score_sorted_dict = sorted(score_dict.items(), key=lambda x:x[1], reverse=True)
 bar_graph(score_dict, xlabel="object name", ylabel="number of actions")

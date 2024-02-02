@@ -3,7 +3,8 @@ import sys
 sys.path.append(os.path.join(os.path.dirname(__file__), ".."))
 
 from json_functions.neo4jinterface import Neo4jInterface
-from visualization.bar_graph import bar_graph, bar_graph_flame
+from visualization.bar_graph import bar_graph
+from visualization.table import table
 from query_functions.driver_functions import flame_difference, all_flame_difference_mean, search_action_and_state_about_object, search_all_action_and_state_about_object
 # from py2neo import Graph, 
 from neo4j import GraphDatabase
@@ -16,7 +17,10 @@ nishiB = "nishiBver2"
 tanakaA = "tanakaAver2"
 tanakaB = "tanakaBver2"
 PASSWORD = 'vrwiki81'
-graph = Neo4jInterface("bolt://localhost:7687", name = tanakaB, password=PASSWORD)
+
+# 入力
+name = nishiA
+graph = Neo4jInterface("bolt://localhost:7687", name = name, password=PASSWORD)
 
 """
 ここでやること
@@ -39,7 +43,9 @@ r_type = "stateaction"
 r_type2 = "mainObject"
 target_label = "State"
 target_label2 = "Action"
-database = tanakaB
+database = name
 
 # search_action_and_state_about_object(label, object_name, r_type, r_type2, target_label, target_label2, database)
-search_all_action_and_state_about_object(label, object_list, r_type, r_type2, target_label, target_label2, database)
+object_list = search_all_action_and_state_about_object(label, object_listA, r_type, r_type2, target_label, target_label2, database)
+
+table(object_list, name)

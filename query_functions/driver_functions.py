@@ -22,8 +22,6 @@ def flame_difference(label: str, object_name: str, r_type: str, r_type2: str, ta
         # print(f"flame_difference: {flame_difference}")
         flame_difference_list.append(flame_difference)
         n += 1
-
-
     # print(f"base node: {object_name}")
     # print(f"first_relation: {r_type}")
     # print(f"target node label: {target_label}")
@@ -61,8 +59,8 @@ def search_action_and_state_about_object(label: str,object_name: str,  r_type: s
     hand_dict4["LHand(DIrect)"] = 0
     hand_dict4["times"] = 0
 
-    event_dict["HoverExit"] = hand_dict
-    event_dict["HoverEnter"] = hand_dict2
+    event_dict["HoverEnter"] = hand_dict
+    event_dict["HoverExit"] = hand_dict2
     event_dict["SelectEnter"] = hand_dict3
     event_dict["SelectExit"] = hand_dict4
 
@@ -119,9 +117,12 @@ def all_flame_difference_mean(label: str, object_list: list, r_type: str, r_type
             flame_dif_list_mean = 0
         else:
             flame_dif_list_mean = flame_dif_list_sum / flame_dif_list_size
+
+        object_name = object_name.split("_")[0]
         flame_difference_all_dict[object_name] = {"size":flame_dif_list_size, "sum":flame_dif_list_sum, "mean":flame_dif_list_mean}
         flame_difference_dict[object_name] = flame_dif_list_mean
         
 
     print(f"flame_difference_dict: {flame_difference_dict}")
+    print(f"all_flame_dict: {flame_difference_all_dict}")
     return flame_difference_all_dict, flame_difference_dict
